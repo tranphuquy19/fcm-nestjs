@@ -14,6 +14,8 @@
   </a>
 </div>
 
+This project forked from [CostianuRazvan/nestjs-fcm](https://github.com/CostianuRazvan/nestjs-fcm)
+
 ### Installation
 
 ```bash
@@ -47,14 +49,22 @@ export class AppModule {}
 export class SampleService {
   constructor(private readonly fcmService: FcmService) {}
 
-  async doStuff() {
+  async sendToDevices() {
     await this.fcmService.sendNotification([
-      'device_id_1',
-      'device_id_2',
+      'device_token_1',
+      'device_token_2',
       ]
       payload,
       silent,
-    ]);
+    );
+  }
+
+  async sendToTopic(topic: string) {
+    await this.fcmService.sendToTopic(
+      topic,
+      payload,
+      silent,
+    );
   }
 }
 ```
