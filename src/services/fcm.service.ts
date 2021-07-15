@@ -63,7 +63,7 @@ export class FcmService {
     payload: firebaseAdmin.messaging.MessagingPayload,
     silent: boolean
   ) {
-    if (topic.trim().length === 0) {
+    if (!topic && topic.trim().length === 0) {
       throw new Error('You provide an empty topic name!');
     }
 
