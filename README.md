@@ -79,7 +79,7 @@ Contributions welcome! See [Contributing](CONTRIBUTING.md).
 
 ## Author
 
-**Razvan Costianu**
+**Tran Quy**
 
 ## License
 
