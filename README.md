@@ -19,7 +19,7 @@ _This project forked from [CostianuRazvan/nestjs-fcm](https://github.com/Costian
 ### Installation
 
 ```bash
-npm install --save nestjs-fcm
+npm install --save @doracoder/fcm-nestjs
 ```
 
 ### FcmModule
