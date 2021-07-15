@@ -28,8 +28,8 @@ To user FcmService you must add the module first. **The `FcmModule` has a `@Glob
 
 ```typescript
 import { Module } from '@nestjs/common';
+import { FcmModule } from '@doracoder/fcm-nestjs';
 import * as path from 'path';
-import { FcmModule } from 'nestjs-fcm';
 
 @Module({
   imports: [
