@@ -14,7 +14,7 @@
   </a>
 </div>
 
-This project forked from [CostianuRazvan/nestjs-fcm](https://github.com/CostianuRazvan/nestjs-fcm)
+_This project forked from [CostianuRazvan/nestjs-fcm](https://github.com/CostianuRazvan/nestjs-fcm)_
 
 ### Installation
 
