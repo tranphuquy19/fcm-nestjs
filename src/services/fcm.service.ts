@@ -9,7 +9,26 @@ export class FcmService {
   constructor(
     @Inject(FCM_OPTIONS) private fcmOptionsProvider: FcmOptions,
     private readonly logger: Logger,
-  ) { }
+  ) {
+    if (firebaseAdmin.apps.length === 0) {
+      firebaseAdmin.initializeApp({
+        credential: firebaseAdmin.credential.cert(
+          this.fcmOptionsProvider.firebaseSpecsPath,
+        ),
+      });
+    }
+  }
+
+  private readonly options = {
+    priority: 'high',
+    timeToLive: 60 * 60 * 24,
+  };
+
+  private readonly optionsSilent = {
+    priority: 'high',
+    timeToLive: 60 * 60 * 24,
+    content_available: true,
+  };
 
   async sendNotification(
     deviceIds: Array<string>,
@@ -20,79 +39,49 @@ export class FcmService {
       throw new Error('You provide an empty device ids list!');
     }
 
-    if (firebaseAdmin.apps.length === 0) {
-      firebaseAdmin.initializeApp({
-        credential: firebaseAdmin.credential.cert(
-          this.fcmOptionsProvider.firebaseSpecsPath,
-        ),
-      });
-    }
-
-    const options = {
-      priority: 'high',
-      timeToLive: 60 * 60 * 24,
-    };
-
-    const optionsSilent = {
-      priority: 'high',
-      timeToLive: 60 * 60 * 24,
-      content_available: true,
-    };
-
     let result = null;
     try {
       result = await firebaseAdmin
         .messaging()
-        .sendToDevice(deviceIds, payload, silent ? optionsSilent : options);
+        .sendToDevice(
+          deviceIds,
+          payload,
+          silent ? this.optionsSilent : this.options,
+        );
     } catch (error) {
-      this.logger.error(error.message, error.stackTrace, 'nestjs-fcm');
+      this.logger.error(error.message, error.stackTrace, 'fcm-nestjs');
       throw error;
     }
     return result;
   }
 
   /**
-   * 
+   *
    * @param topic `all` is send to all devices
    * @param payload ref: firebaseAdmin.messaging.MessagingPayload
-   * @param silent 
-   * @returns 
+   * @param silent
+   * @returns
    */
   async sendToTopic(
     topic: 'all' | string,
     payload: firebaseAdmin.messaging.MessagingPayload,
-    silent: boolean
+    silent: boolean,
   ) {
     if (!topic && topic.trim().length === 0) {
       throw new Error('You provide an empty topic name!');
     }
 
-    if (firebaseAdmin.apps.length === 0) {
-      firebaseAdmin.initializeApp({
-        credential: firebaseAdmin.credential.cert(
-          this.fcmOptionsProvider.firebaseSpecsPath,
-        ),
-      });
-    }
-
-    const options = {
-      priority: 'high',
-      timeToLive: 60 * 60 * 24,
-    };
-
-    const optionsSilent = {
-      priority: 'high',
-      timeToLive: 60 * 60 * 24,
-      content_available: true,
-    };
-
     let result = null;
     try {
       result = await firebaseAdmin
         .messaging()
-        .sendToTopic(topic, payload, silent ? optionsSilent : options);
+        .sendToTopic(
+          topic,
+          payload,
+          silent ? this.optionsSilent : this.options,
+        );
     } catch (error) {
-      this.logger.error(error.message, error.stackTrace, 'nestjs-fcm');
+      this.logger.error(error.message, error.stackTrace, 'fcm-nestjs');
       throw error;
     }
     return result;
