@@ -1,6 +1,6 @@
 {
   "name": "@doracoder/fcm-nestjs",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "NestJS npm package starter",
   "author": "Quy Tran <tranphuquy19@gmail.com>",
   "license": "MIT",
@@ -37,7 +37,7 @@
     "@nestjs/common": "^8.0.6"
   },
   "dependencies": {
-    "firebase-admin": "^9.5.0",
+    "firebase-admin": "^11.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.3.0"
   },
